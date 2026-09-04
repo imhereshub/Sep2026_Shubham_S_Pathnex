@@ -1,0 +1,8 @@
+linux command 
+
+
+pwd
+cd
+ls -l
+ls -ld
+

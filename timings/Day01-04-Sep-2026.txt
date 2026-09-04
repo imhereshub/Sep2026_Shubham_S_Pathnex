@@ -1,0 +1,4 @@
+**Yesterday (Day 1):** Joined the classes and started learning Linux basics.
+
+Today (Day 2): Spent 2 hours watching Linux tutorials, completed Linux basics, and set up Git with basic command practice.
+ 
