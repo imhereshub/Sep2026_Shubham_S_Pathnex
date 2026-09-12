@@ -1,0 +1,7 @@
+what i did today 
+ 
+* 1 hours to watch the docker video 
+* Spent 30 minutes writing and practicing code.
+* Spent 1 hour practicing and understanding Docker commands.
+* Spent 1 hour watching a podcast.
+
