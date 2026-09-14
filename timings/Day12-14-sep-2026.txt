@@ -1,0 +1,5 @@
+what i did today
+2 hours watch kubernets class 3
+30 min for code
+2 hours for movie
+1 hours to create eks cluster on aws 
