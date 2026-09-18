@@ -1,0 +1,113 @@
+Day 15 — Automation with Terraform, Ansible, and CI/CD Pipelines
+🔹 Ansible — Deploy a Web Application to Multiple Hosts
+- name: Deploy web application to multiple hosts
+  hosts: all
+  become: yes
+  tasks:
+    - name: copy web app file
+      copy:
+         src: /path/to/web/app/
+         dest: /var/www/html
+    - name: Start web app service
+      service:
+      name: Apache2
+      state: started
+      enabled: yes
+🔹 Terraform — Create EC2 with ALB (Application Load Balancer)
+resource "aws_lb" "pathnex-lb" {
+  name             = "pathnex-lb"
+  internal         = false
+  load_balancer_type = "application"
+  security_group     = [aws_security-group.allow_ssh-http.id]
+  subnets            = [aws_sunet.public.id]
+}
+
+resource "aws_instance" "pathnex_ec2"
+  ami            = "ami-01010101023"
+  instance_type  = "t2.micro"
+  security_group = [aws_security_group.allow_ssh_http.name]
+
+
+tags = {
+  name = "pathnex-ec2"
+ }
+}
+
+🔹 Kubernetes — Helm Chart for Redis with Persistence
+helm install pathnex-redis bitnami/redis --set persistence.enabled=true --set persistence.size=8Gi
+🔹 Jenkinsfile — Multi-Environment Deployment
+pipeline {
+  agent any
+    environment {
+      IMAGE_NAME = 'pathnex-wen-app'
+      DEPLOY_ENV = 'production'
+  }
+  stages {
+      stage('build'){
+         steps {
+            echo 'Building Docker image..'
+            docker.build("${env.IMAGE_NAME}")
+        }
+     }
+      stage('Test') {
+         steps {
+             echo 'Runn9ing tests..'
+        }
+      }
+      stage('Deploy to Kubernetes') {
+         steps {
+            script {
+               if (env.Depoy_ENV == 'production') {
+                    sh 'kubectl apply -f kubernetes/prod-deployment.yaml'
+                } else {
+                    sh 'kubectl apply -f kubernetes/dev-deployment.yaml'
+                  }
+               }
+            }
+         }
+      }
+   } 
+🔹 GitLab CI/CD — Environment-Specific Deployments
+stages:
+ - build
+ - push
+ - deploy
+ 
+build:
+ stage: build
+ script:
+   - docker build -t pathnex-web-app .
+
+push:
+ stage: push
+ script:
+   - docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD"
+   - docker push pathnex-web-app
+
+deploy:
+ stage: deploy
+ script:
+ - |
+   if ["$CI_COMMIT_REF_NAME" == "main ]; then
+     kubectl apply -f kubernetes/prod-deployment.yaml
+   else
+     kubectl apply -f kubernetes/dev-deployment.yaml
+   fi
+
+
+🔹 Docker
+# Multi RUN Commands
+FROM ubuntu
+RUN apt update && \
+    apt install curl -y && \
+    apt install vim -y
+CMD ["echo", "Hello Pathnex"]
+
+
+
+
+
+
+
+
+
